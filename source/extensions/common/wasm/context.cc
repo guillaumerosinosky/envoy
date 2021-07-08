@@ -127,12 +127,10 @@ WasmResult Buffer::copyFrom(size_t start, size_t length, absl::string_view data)
       if (length == 0) {
         buffer_instance_->prepend(data);
         return WasmResult::Ok;
-      } else if (length >= buffer_instance_->length()) {
+      } else {
         buffer_instance_->drain(buffer_instance_->length());
         buffer_instance_->add(data);
         return WasmResult::Ok;
-      } else {
-        return WasmResult::BadArgument;
       }
     } else if (start >= buffer_instance_->length()) {
       buffer_instance_->add(data);
